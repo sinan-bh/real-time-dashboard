@@ -7,10 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { metricData } from "@/lib/constants";
 
 export function LiveMetrics({ isPolling, isLoading }: LiveMetricsProps) {
-  const initialMetrics = useMemo<MetricProps[]>(
-    () => metricData,
-    []
-  );
+  const initialMetrics = useMemo<MetricProps[]>(() => metricData, []);
 
   const [metrics, setMetrics] = useState(initialMetrics);
 
@@ -43,20 +40,20 @@ export function LiveMetrics({ isPolling, isLoading }: LiveMetricsProps) {
   }, [isPolling]);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
       {isLoading ? (
         <>
           {Array.from({ length: 4 }).map((_, i) => (
             <div
               key={i}
-              className="bg-slate-800/40 rounded-xl border border-slate-700 p-4 shadow-lg"
+              className="bg-slate-800/40 rounded-xl border border-slate-700 p-3 shadow-lg"
             >
-              <div className="flex items-start justify-between mb-3">
-                <Skeleton className="w-10 h-10 rounded-lg" />
-                <Skeleton className="w-16 h-5 rounded-md" />
+              <div className="flex items-start justify-between mb-2">
+                <Skeleton className="w-8 h-8 rounded-lg" />
+                <Skeleton className="w-14 h-4 rounded-md" />
               </div>
-              <Skeleton className="h-8 w-24 mb-2" />
-              <Skeleton className="h-4 w-32" />
+              <Skeleton className="h-7 w-3/4 mb-1" />
+              <Skeleton className="h-3 w-1/2" />
             </div>
           ))}
         </>

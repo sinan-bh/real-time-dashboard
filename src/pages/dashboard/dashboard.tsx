@@ -17,13 +17,12 @@ export default function Dashboard() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoadingTimer(false);
-    }, 2000); // Simulate loading for 2 seconds
+    }, 2000); 
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
-      {/* Header */}
       <header className="border-b border-slate-700 bg-slate-900/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
@@ -47,16 +46,15 @@ export default function Dashboard() {
 
       <div className="container mx-auto px-4 py-6">
         <div className="grid grid-cols-12 gap-6">
-          {/* Timer Section */}
           <div className="col-span-12 lg:col-span-4">
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700 p-6">
-              <div className="flex items-center gap-2 mb-6">
+            <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700 p-5">
+              <div className="flex items-center gap-2 mb-2">
                 <Clock className="w-5 h-5 text-cyan-400" />
-                <h2 className="font-semibold text-lg">Timer Control</h2>
+                <h2 className="font-semibold text-md">Timer Control</h2>
               </div>
               <Suspense
                 fallback={
-                  <div className="space-y-6">
+                  <div className="space-y-4">
                     <Skeleton className="h-9 w-full" />
                     <Skeleton className="h-12 w-full" />
                     <Skeleton className="h-2 w-full" />
@@ -71,10 +69,10 @@ export default function Dashboard() {
 
           {/* Live Metrics */}
           <div className="col-span-12 lg:col-span-8">
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700 p-6">
+            <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700 p-5">
               <div className="flex items-center gap-2 mb-4">
                 <BarChart3 className="w-5 h-5 text-cyan-400" />
-                <h2 className="font-semibold text-lg">Live Metrics</h2>
+                <h2 className="font-semibold text-md">Live Metrics</h2>
               </div>
               <Suspense
                 fallback={

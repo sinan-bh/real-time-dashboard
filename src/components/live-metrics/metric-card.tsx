@@ -19,7 +19,7 @@ export function MetricCard({ metric }: MetricCardProps) {
     <Card
       className={`border ${border} bg-slate-800/40 backdrop-blur-sm shadow-lg transition-all hover:scale-[1.02]`}
     >
-      <CardContent className="p-4">
+      <CardContent className="p-2">
         {/* Header */}
         <div className="flex items-start justify-between">
           <div className={`p-2 rounded-lg ${text} ${bg}`}>

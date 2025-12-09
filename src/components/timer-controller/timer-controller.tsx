@@ -103,21 +103,15 @@ export function TimerControl({ isLoading }: { isLoading: boolean }) {
 
   return (
     <Card className="bg-slate-800 border-slate-700 text-white">
-      <CardHeader>
-        <CardTitle className="text-center text-2xl text-cyan-400">
-          Timer Control
-        </CardTitle>
-      </CardHeader>
-
       {isLoading ? (
-        <CardContent className="space-y-6">
-          <Skeleton className="h-9 w-full" />
-          <Skeleton className="h-12 w-full" />
-          <Skeleton className="h-2 w-full" />
+        <CardContent className="space-y-4">
+          <Skeleton className="h-8 w-full" />
           <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-2 w-full" />
+          <Skeleton className="h-9 w-full" />
         </CardContent>
       ) : (
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-2">
           <TimerModeSwitch mode={mode} onSwitch={handleModeSwitch} />
 
           <TimerDisplay mode={mode} formattedTime={formattedTime} />
@@ -129,9 +123,9 @@ export function TimerControl({ isLoading }: { isLoading: boolean }) {
               countdownTarget={countdownTarget}
               setCountdownTarget={(newTarget) => {
                 setCountdownTarget(newTarget);
-                setTime(newTarget); // sync time with new target
-                lastTickRef.current = null; // reset delta calculation
-                setIsRunning(false); // pause timer while editing
+                setTime(newTarget); 
+                lastTickRef.current = null; 
+                setIsRunning(false); 
               }}
               setTime={setTime}
             />
@@ -139,7 +133,7 @@ export function TimerControl({ isLoading }: { isLoading: boolean }) {
         </CardContent>
       )}
 
-      <CardFooter className="border-t border-slate-700 pt-4">
+      <CardFooter className="">
         {isLoading ? (
           <div className="w-full flex flex-col gap-4">
             <Skeleton className="h-9 w-full" />

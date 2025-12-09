@@ -6,7 +6,6 @@ export function TimerActions({
   isRunning,
   onPlayPause,
   onReset,
-  mode,
 }: {
   isRunning: boolean;
   onPlayPause: () => void;
@@ -41,19 +40,6 @@ export function TimerActions({
         >
           <RotateCcw className="w-5 h-5" /> Reset
         </Button>
-      </div>
-
-      <div className="grid grid-cols-2 gap-4 text-center">
-        <div>
-          <div className="text-slate-400">Status</div>
-          <div className="text-lg text-cyan-400">
-            {isRunning ? "Running" : "Paused"}
-          </div>
-        </div>
-        <div>
-          <div className="text-slate-400">Mode</div>
-          <div className="text-lg text-cyan-400 capitalize">{mode}</div>
-        </div>
       </div>
     </div>
   );

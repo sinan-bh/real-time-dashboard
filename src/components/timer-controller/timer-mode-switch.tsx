@@ -13,16 +13,16 @@ export function TimerModeSwitch({
     <div className="flex gap-2">
       <Button
         onClick={() => onSwitch("stopwatch")}
-        variant={mode === "stopwatch" ? "default" : "secondary"}
-        className="flex-1 rounded-lg"
+        variant={mode === "stopwatch" ? "secondary" : "default"}
+        className={`flex-1 rounded-lg border-2 hover:text-white hover:bg-white ${mode === "stopwatch" ? "" : "bg-transparent"}`}
       >
         <Clock className="w-4 h-4 mr-2" /> Stopwatch
       </Button>
 
       <Button
         onClick={() => onSwitch("countdown")}
-        variant={mode === "countdown" ? "default" : "secondary"}
-        className="flex-1 rounded-lg"
+        variant={mode === "countdown" ? "secondary" : "default"}
+        className={`flex-1 rounded-lg border-2 hover:text-black hover:bg-white ${mode === "countdown" ? "" : "bg-transparent"}`}
       >
         <Timer className="w-4 h-4 mr-2" /> Countdown
       </Button>
