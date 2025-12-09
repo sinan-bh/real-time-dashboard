@@ -32,3 +32,5 @@ The project utilizes several external packages to provide its functionality and 
 - **Lazy Loading (Dynamic Imports)**: Main dashboard components are dynamically imported using `React.lazy` and `Suspense` to reduce the initial bundle size and improve load times.
 - **Debouncing**: A custom `useDebounce` hook is implemented to optimize input handling (e.g., search in the data table), reducing the frequency of re-renders and API calls.
 - **Infinite Scroll Pagination**: The `VirtualDataTable` features infinite scrolling, loading additional data and displaying a refresh spinner as the user scrolls down, ensuring a smooth user experience with large datasets.
+- **Custom 404 Page**: A `not-found.tsx` file is implemented to display a custom and animated 404 page for invalid routes, improving user experience.
+- **Mobile-Friendly Horizontal Scrolling**: The `VirtualDataTable` now supports horizontal scrolling for both its header and rows on mobile devices, ensuring full data visibility and usability on smaller screens.

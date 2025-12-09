@@ -1,6 +1,6 @@
 import { Play, Pause, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { TimerMode } from "@/lib/types";
+
 
 export function TimerActions({
   isRunning,
@@ -10,11 +10,11 @@ export function TimerActions({
   isRunning: boolean;
   onPlayPause: () => void;
   onReset: () => void;
-  mode: TimerMode;
 }) {
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="flex gap-3">
+        {/* Play/Pause Button: Changes appearance and icon based on timer's running state */}
         <Button
           onClick={onPlayPause}
           className={`flex-1 rounded-lg flex items-center justify-center gap-2 ${
@@ -34,6 +34,7 @@ export function TimerActions({
           )}
         </Button>
 
+        {/* Reset Button: Resets the timer to its initial state */}
         <Button
           onClick={onReset}
           className="flex-1 bg-slate-700 hover:bg-slate-600 rounded-lg flex items-center justify-center gap-2"

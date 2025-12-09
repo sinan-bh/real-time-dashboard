@@ -11,12 +11,16 @@ export function CountdownInput({
 }) {
   return (
     <div>
-      <label className="text-slate-400 block mb-2">Set Countdown (seconds)</label>
+      {/* Label for the countdown input field */}
+      <label className="text-slate-400 block mb-2">
+        Set Countdown (seconds)
+      </label>
+      {/* Numeric input field for setting the countdown target */}
       <Input
         type="number"
         value={countdownTarget}
         onChange={(e) => {
-          const v = Number(e.target.value) || 0;
+          const v = Number(e.target.value) || 0; // Ensure the value is a number, default to 0 if invalid
           setCountdownTarget(v);
           setTime(v);
         }}

@@ -11,6 +11,11 @@ export function LiveMetrics({ isPolling, isLoading }: LiveMetricsProps) {
 
   const [metrics, setMetrics] = useState(initialMetrics);
 
+  /**
+   * useEffect hook to manage the polling of live metric data.
+   * When `isPolling` is true, it sets up an interval to update the metrics state with new, simulated values.
+   * The interval is cleared when the component unmounts or `isPolling` becomes false.
+   */
   useEffect(() => {
     if (!isPolling) return;
 
@@ -41,6 +46,7 @@ export function LiveMetrics({ isPolling, isLoading }: LiveMetricsProps) {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+      {/* Conditional rendering for skeleton loaders or actual metric cards */}
       {isLoading ? (
         <>
           {Array.from({ length: 4 }).map((_, i) => (

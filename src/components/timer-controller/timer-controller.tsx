@@ -16,6 +16,7 @@ import { TimerActions } from "@/components/timer-controller/timer-action";
 import { CountdownInput } from "@/components/timer-controller/count-down-input";
 import { TimerMode } from "@/lib/types";
 
+
 export function TimerControl({ isLoading }: { isLoading: boolean }) {
   const [mode, setMode] = useState<TimerMode>("stopwatch");
   const [isRunning, setIsRunning] = useState(false);
@@ -24,7 +25,11 @@ export function TimerControl({ isLoading }: { isLoading: boolean }) {
 
   const lastTickRef = useRef<number | null>(null);
 
-  // Timer loop
+  /**
+   * useEffect hook to manage the timer's main loop using requestAnimationFrame.
+   * It updates the time state based on the selected mode (stopwatch or countdown).
+   * For countdown, it automatically stops when time reaches zero.
+   */
   useEffect(() => {
     if (!isRunning) return;
 
@@ -63,17 +68,30 @@ export function TimerControl({ isLoading }: { isLoading: boolean }) {
     };
   }, [isRunning, mode]);
 
+  /**
+   * Callback for playing or pausing the timer.
+   * Toggles the `isRunning` state and resets `lastTickRef` to ensure accurate delta calculation upon restart.
+   */
   const handlePlayPause = useCallback(() => {
     setIsRunning((prev) => !prev);
     lastTickRef.current = null;
   }, []);
 
+  /**
+   * Callback for resetting the timer.
+   * Stops the timer, sets the time back to initial value (0 for stopwatch, `countdownTarget` for countdown),
+   * and resets `lastTickRef`.
+   */
   const handleReset = useCallback(() => {
     setIsRunning(false);
     setTime(mode === "countdown" ? countdownTarget : 0);
     lastTickRef.current = null;
   }, [mode, countdownTarget]);
 
+  /**
+   * Callback for switching the timer mode.
+   * Sets the new mode, stops the timer, and resets the time to its initial value based on the new mode.
+   */
   const handleModeSwitch = useCallback(
     (newMode: TimerMode) => {
       setMode(newMode);
@@ -84,6 +102,10 @@ export function TimerControl({ isLoading }: { isLoading: boolean }) {
     [countdownTarget]
   );
 
+  /**
+   * Memoized formatted time string (HH:MM:SS) for display.
+   * Recalculated only when the `time` state changes.
+   */
   const formattedTime = useMemo(() => {
     const h = Math.floor(time / 3600);
     const m = Math.floor((time % 3600) / 60);
@@ -94,6 +116,10 @@ export function TimerControl({ isLoading }: { isLoading: boolean }) {
       .padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
   }, [time]);
 
+  /**
+   * Memoized progress value (0-100) for the countdown timer.
+   * Recalculated only when `time`, `mode`, or `countdownTarget` changes.
+   */
   const progress = useMemo(() => {
     if (mode === "countdown" && countdownTarget > 0) {
       return (1 - time / countdownTarget) * 100;
@@ -103,6 +129,7 @@ export function TimerControl({ isLoading }: { isLoading: boolean }) {
 
   return (
     <Card className="bg-slate-800 border-slate-700 text-white">
+      {/* Conditional rendering for skeleton loader or actual timer content */}
       {isLoading ? (
         <CardContent className="space-y-4">
           <Skeleton className="h-8 w-full" />
@@ -112,20 +139,24 @@ export function TimerControl({ isLoading }: { isLoading: boolean }) {
         </CardContent>
       ) : (
         <CardContent className="space-y-2">
+          {/* Component to switch between stopwatch and countdown modes */}
           <TimerModeSwitch mode={mode} onSwitch={handleModeSwitch} />
 
+          {/* Displays the current formatted time */}
           <TimerDisplay mode={mode} formattedTime={formattedTime} />
 
+          {/* Progress bar for countdown mode */}
           {mode === "countdown" && <TimerProgress progress={progress} />}
 
+          {/* Input for setting countdown target, visible only when not running in countdown mode */}
           {!isRunning && mode === "countdown" && (
             <CountdownInput
               countdownTarget={countdownTarget}
               setCountdownTarget={(newTarget) => {
                 setCountdownTarget(newTarget);
-                setTime(newTarget); 
-                lastTickRef.current = null; 
-                setIsRunning(false); 
+                setTime(newTarget);
+                lastTickRef.current = null;
+                setIsRunning(false);
               }}
               setTime={setTime}
             />
@@ -135,16 +166,17 @@ export function TimerControl({ isLoading }: { isLoading: boolean }) {
 
       <CardFooter className="">
         {isLoading ? (
+          // Skeleton while loading
           <div className="w-full flex flex-col gap-4">
             <Skeleton className="h-9 w-full" />
             <Skeleton className="h-9 w-full" />
           </div>
         ) : (
+          // Timer control actions: Play/Pause + Reset
           <TimerActions
             isRunning={isRunning}
             onPlayPause={handlePlayPause}
             onReset={handleReset}
-            mode={mode}
           />
         )}
       </CardFooter>

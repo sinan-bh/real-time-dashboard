@@ -8,12 +8,18 @@ import { Notification, NotificationsPanelProps } from "@/lib/types";
 import { notificationMessages } from "@/lib/constants";
 import { Skeleton } from "@/components/ui/skeleton";
 
+
 export function NotificationsPanel({
   isPolling,
   isLoading,
 }: NotificationsPanelProps) {
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
+  /**
+   * useCallback hook to add a new random notification to the panel.
+   * It selects a random type (info, success, warning, error) and a corresponding message.
+   * New notifications are added to the beginning of the list, keeping a maximum of 10 notifications.
+   */
   const addNotification = useCallback(() => {
     const types: Notification["type"][] = [
       "info",
@@ -35,22 +41,32 @@ export function NotificationsPanel({
     setNotifications((prev) => [newNotification, ...prev].slice(0, 10));
   }, []);
 
+  /**
+   * useEffect hook to manage the periodic generation of new notifications.
+   * When `isPolling` is true, it sets up an interval to call `addNotification` randomly every 4 seconds.
+   * The interval is cleared when the component unmounts or `isPolling` becomes false.
+   */
   useEffect(() => {
     if (!isPolling) return;
 
     const interval = setInterval(() => {
-      if (Math.random() < 0.3) addNotification();
+      if (Math.random() < 0.3) addNotification(); // Roughly 30% chance to add a new notification
     }, 4000);
 
     return () => clearInterval(interval);
   }, [isPolling, addNotification]);
 
+  /**
+   * useCallback hook to remove a specific notification by its ID.
+   * It filters out the notification with the matching ID from the `notifications` state.
+   */
   const removeNotification = useCallback((id: string) => {
     setNotifications((prev) => prev.filter((n) => n.id !== id));
   }, []);
 
   return (
     <div className="space-y-4">
+      {/* Conditional rendering for skeleton loader or notification header and items */}
       {isLoading ? (
         <div className="space-y-4">
           <div className="flex justify-between items-center">
@@ -71,12 +87,14 @@ export function NotificationsPanel({
           ))}
         </div>
       ) : (
+        // Notification header with count and clear all button
         <NotificationHeader
           notifications={notifications}
           clearAll={() => setNotifications([])}
         />
       )}
 
+      {/* Container for scrollable notification items */}
       <div className="space-y-2 max-h-96 overflow-y-auto hide-scrollbar">
         {isLoading ? (
           // Skeleton for notification items when loading
@@ -95,8 +113,10 @@ export function NotificationsPanel({
             ))}
           </div>
         ) : notifications.length === 0 ? (
+          // Displayed when there are no notifications
           <NotificationEmpty />
         ) : (
+          // List of individual notification items
           notifications.map((n) => (
             <NotificationItem
               key={n.id}

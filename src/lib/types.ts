@@ -92,5 +92,3 @@ export type ChartTooltipProps = {
   active: boolean;
   payload: ChartTooltipItem[];
 };
-
-
